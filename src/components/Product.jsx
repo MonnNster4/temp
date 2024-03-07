@@ -83,7 +83,11 @@ function Product() {
                   href="#"
                   className="font-medium text-cyan-600 hover:underline dark:text-cyan-500  flex gap-2"
                 >
-                  <MdEdit size={15} className="cursor-pointer" />
+                  <MdEdit
+                    size={15}
+                    className="cursor-pointer"
+                    onClick={() => setShowModal(true)}
+                  />
                   <RiDeleteBin6Fill size={15} className="cursor-pointer" />
                 </a>
               </Table.Cell>
