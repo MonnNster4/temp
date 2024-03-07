@@ -11,11 +11,13 @@ import { MdEdit } from "react-icons/md";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import { useState } from "react";
 import Modal from "../components/Modal";
+import ModalTwo from "./ModalTwo";
 
 // const Product = ({ product }) => {
 
 function Product() {
   const [showModal, setShowModal] = useState(false);
+  const [showModalTwo, setShowModalTwo] = useState(false);
   return (
     <>
       <nav className=" ">
@@ -88,7 +90,11 @@ function Product() {
                     className="cursor-pointer"
                     onClick={() => setShowModal(true)}
                   />
-                  <RiDeleteBin6Fill size={15} className="cursor-pointer" />
+                  <RiDeleteBin6Fill
+                    size={15}
+                    className="cursor-pointer"
+                    onClick={() => setShowModalTwo(true)}
+                  />
                 </a>
               </Table.Cell>
             </Table.Row>
@@ -349,6 +355,10 @@ function Product() {
         </Table>
       </div>
       <Modal isVisible={showModal} onClose={() => setShowModal(false)} />
+      <ModalTwo
+        isVisible={showModalTwo}
+        onClose={() => setShowModalTwo(false)}
+      />
       {/* <div className="overflow-x-auto m-5 md:ml-[320px] mt-[3.5rem] mr-[1.5rem] md:mr-[2.5rem]  rounded-2xl shadow-md ">
         <Table striped className="p-4 ">
           <Table.Head className="p-2 text-tertiary text-[0.70rem]">
