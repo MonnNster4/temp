@@ -9,15 +9,30 @@ import { Table } from "flowbite-react";
 import { IoMdPersonAdd } from "react-icons/io";
 import { MdEdit } from "react-icons/md";
 import { RiDeleteBin6Fill } from "react-icons/ri";
-import { useState } from "react";
 import Modal from "../components/Modal";
 import ModalTwo from "./ModalTwo";
+import { useEffect, useState } from "react";
+import axios from "axios";
+const Axios = () => {
+  const [meals, setMeals] = useState([]);
+
+};
 
 // const Product = ({ product }) => {
 
 function Product() {
   const [showModal, setShowModal] = useState(false);
   const [showModalTwo, setShowModalTwo] = useState(false);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:1993/api/get_user")
+      .then((res) => {
+        console.log(res.data)
+
+      });
+  }, []);
+
   return (
     <>
       <nav className=" ">
