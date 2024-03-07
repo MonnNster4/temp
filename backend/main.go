@@ -25,6 +25,7 @@ func main() {
 	CreateDB("Temp")
 	MigrateDB()
 	Handlers()
+	CreateDefaultUser()
 	mux := http.NewServeMux()
 	mux.HandleFunc("/plm/cors", Cors)
 

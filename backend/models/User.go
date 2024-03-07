@@ -8,8 +8,8 @@ type User struct {
 	Password string
 	Name     string
 	Type     string
-	Email     string
-	Team	 string
+	Email    string
+	Team     string
 	Position string
 	Deleted  gorm.DeletedAt
 }

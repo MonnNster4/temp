@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/dafalo/Temp/backend/models"
+	"github.com/dafalo/temp/backend/models"
 	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/driver/mysql"
@@ -228,7 +228,7 @@ func hashPassword(pass string) string {
 }
 
 func GormDB() *gorm.DB {
-	dsn := "root:GroupNB2023@tcp(127.0.0.1:3306)/Temo?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "root:GroupNB2023@tcp(127.0.0.1:3306)/Temp?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
 	if err != nil {
