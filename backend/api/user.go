@@ -91,6 +91,7 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 		"status": "ok",
 		"item":   contact,
 	}
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	ReturnJSON(w, r, data)
 
 	sqlDB, _ := db.DB()
