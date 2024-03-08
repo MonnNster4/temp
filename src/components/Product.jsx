@@ -13,25 +13,24 @@ import Modal from "../components/Modal";
 import ModalTwo from "./ModalTwo";
 import { useEffect, useState } from "react";
 import axios from "axios";
-const Axios = () => {
-  const [meals, setMeals] = useState([]);
-
-};
 
 // const Product = ({ product }) => {
 
-function Product() {
+function Product({}) {
   const [showModal, setShowModal] = useState(false);
   const [showModalTwo, setShowModalTwo] = useState(false);
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:1993/api/get_user")
-      .then((res) => {
-        console.log(res.data)
+  const [candidates, setCandidates] = useState([]);
 
-      });
-  }, []);
+  useEffect(() => {
+    fetchData();
+  }, [candidates]);
+
+    const fetchData = async () => {
+      const result = await axios.get("http://localhost:1993/api/get_candidate");
+      setCandidates(result.data.item);
+    };
+  
 
   return (
     <>
@@ -77,7 +76,50 @@ function Product() {
             <Table.HeadCell>Action</Table.HeadCell>
           </Table.Head>
           <Table.Body className="divide-y text-[12.5px]">
-            <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+            {candidates.length > 0
+              ? candidates.map((item, key) => {
+                  return (
+                    <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                      <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                        {"1"}
+                      </Table.Cell>
+                      <Table.Cell>{item.Name}</Table.Cell>
+                      <Table.Cell>
+                        {" "}
+                        <div className="bg-[#20c934]  w-14 h-5 rounded-md flex justify-center items-center text-white uppercase font-bold text-[10.5px] ">
+                          {item.Status}
+                        </div>
+                      </Table.Cell>
+                      <Table.Cell>{item.CreationDate}</Table.Cell>
+                      <Table.Cell>{item.DOB}</Table.Cell>
+                      <Table.Cell>{item.Address}</Table.Cell>
+                      <Table.Cell>{item.Email}</Table.Cell>
+                      <Table.Cell>{item.Phone}</Table.Cell>
+                      <Table.Cell>{item.TypeCandidate}</Table.Cell>
+                      <Table.Cell>{item.Comments}</Table.Cell>
+                      <Table.Cell>
+                        <a
+                          href="#"
+                          className="font-medium text-cyan-600 hover:underline dark:text-cyan-500  flex gap-2"
+                        >
+                          <MdEdit
+                            size={15}
+                            className="cursor-pointer"
+                            onClick={() => setShowModal(true)}
+                          />
+                          <RiDeleteBin6Fill
+                            size={15}
+                            className="cursor-pointer"
+                            onClick={() => setShowModalTwo(true)}
+                          />
+                        </a>
+                      </Table.Cell>
+                    </Table.Row>
+                  );
+                })
+              : null}
+
+            {/* <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
               <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
                 {"1"}
               </Table.Cell>
@@ -88,7 +130,7 @@ function Product() {
                   Active{" "}
                 </div>
               </Table.Cell>
-              <Table.Cell>24/03/11</Table.Cell>
+              <Table.Cell>Jeremiah Monfiel</Table.Cell>
               <Table.Cell>99/04/01</Table.Cell>
               <Table.Cell>Laspinas, 509 Moonwalk, 1475</Table.Cell>
               <Table.Cell>monfiel@gmail.com</Table.Cell>
@@ -112,8 +154,8 @@ function Product() {
                   />
                 </a>
               </Table.Cell>
-            </Table.Row>
-            <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+            </Table.Row> */}
+            {/* <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
               <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
                 2
               </Table.Cell>
@@ -365,11 +407,15 @@ function Product() {
                   <RiDeleteBin6Fill size={15} className="cursor-pointer" />
                 </a>
               </Table.Cell>
-            </Table.Row>
+            </Table.Row> */}
           </Table.Body>
         </Table>
       </div>
-      <Modal isVisible={showModal} onClose={() => setShowModal(false)} />
+      <Modal
+        data={candidates}
+        isVisible={showModal}
+        onClose={() => setShowModal(false)}
+      />
       <ModalTwo
         isVisible={showModalTwo}
         onClose={() => setShowModalTwo(false)}

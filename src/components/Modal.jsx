@@ -1,7 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import Axios from "axios";
 
-const Modal = ({ isVisible, onClose }) => {
+
+const Modal = ({ isVisible, onClose, data }) => {
   if (!isVisible) return null;
+
+  const [inputData, setInputData] = useState({ Name: "", CreationDate: "" });
+
+  function handleSubmit(event) {
+    event.preventDefault();
+
+    // console.log(nameInput, dateInput)
+
+    Axios({
+      method: "post",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      url: "http://localhost:1993/api/candidate",
+      data: inputData,
+    }).then(function (response) {
+      onClose();
+    });
+  }
+
+  useEffect(() => {
+    if (data) {
+      setInputData(inputData);
+    } else {
+      inputData;
+    }
+  }, [data]);
 
   return (
     <>
@@ -56,7 +83,7 @@ const Modal = ({ isVisible, onClose }) => {
               </button>
             </div>
             {/* Modal body  */}
-            <form action="#">
+            <form onSubmit={handleSubmit}>
               <div className="grid gap-4 mb-4 sm:grid-cols-2">
                 <div>
                   <label
@@ -70,11 +97,14 @@ const Modal = ({ isVisible, onClose }) => {
                     name="name"
                     id="name"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 block w-full p-2.5 dark:bg-gray-700  dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 "
+                    onChange={(e) =>
+                      setInputData({ ...inputData, Name: e.target.value })
+                    }
                     placeholder="Enter candidate name"
                     required=""
                   />
                 </div>
-                
+
                 {/* <div className="relative max-w-sm flex pt-4">
                   <label className="inline-flex items-center  cursor-pointer">
                     <input type="checkbox" value="" class="sr-only peer" />
@@ -95,7 +125,14 @@ const Modal = ({ isVisible, onClose }) => {
                   <input
                     datepicker
                     type="date"
+                    id="date"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    onChange={(e) =>
+                      setInputData({
+                        ...inputData,
+                        CreationDate: e.target.value,
+                      })
+                    }
                     placeholder="Creation date"
                   />
                 </div>
