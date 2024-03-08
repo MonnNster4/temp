@@ -8,7 +8,7 @@ import (
 )
 
 func AddCandidate(w http.ResponseWriter, r *http.Request) {
-
+	enableCors(&w)
 	db := GormDB()
 
 	contact := models.Candidate{}
@@ -40,11 +40,11 @@ func AddCandidate(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetCandidate(w http.ResponseWriter, r *http.Request) {
-
+	enableCors(&w)
 	db := GormDB()
 
 	contact := []models.Candidate{}
-	db.Preload("User").Preload("Profile").Preload("Position").Order("id desc").Find(&contact)
+	db.Preload("User").Order("id desc").Find(&contact)
 
 	data := map[string]interface{}{
 		"status": "ok",
@@ -58,7 +58,7 @@ func GetCandidate(w http.ResponseWriter, r *http.Request) {
 }
 
 func EditCandidate(w http.ResponseWriter, r *http.Request) {
-
+	enableCors(&w)
 	db := GormDB()
 	id, _ := strconv.Atoi(r.FormValue("id"))
 	contact := models.Candidate{}
@@ -87,7 +87,7 @@ func EditCandidate(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteCandidate(w http.ResponseWriter, r *http.Request) {
-
+	enableCors(&w)
 	db := GormDB()
 	item := models.Candidate{}
 	id, _ := strconv.Atoi(r.FormValue("id"))

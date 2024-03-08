@@ -13,8 +13,12 @@ import (
 	"gorm.io/gorm"
 )
 
-func AddUser(w http.ResponseWriter, r *http.Request) {
+func enableCors(w *http.ResponseWriter) {
+	(*w).Header().Set("Access-Control-Allow-Origin", "*")
+}
 
+func AddUser(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
 	db := GormDB()
 
 	name := r.FormValue("name")
@@ -68,7 +72,7 @@ func AddUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func ChangePassword(w http.ResponseWriter, r *http.Request) {
-
+	enableCors(&w)
 	db := GormDB()
 	product := models.User{}
 	id, _ := strconv.Atoi(r.FormValue("id"))
@@ -81,7 +85,7 @@ func ChangePassword(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetUser(w http.ResponseWriter, r *http.Request) {
-
+	enableCors(&w)
 	db := GormDB()
 
 	contact := []models.User{}
@@ -100,7 +104,7 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func Login(w http.ResponseWriter, r *http.Request) {
-
+	enableCors(&w)
 	db := GormDB()
 	username := r.FormValue("username")
 	password := r.FormValue("password")
@@ -167,7 +171,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 }
 
 func EditUser(w http.ResponseWriter, r *http.Request) {
-
+	enableCors(&w)
 	db := GormDB()
 	id, _ := strconv.Atoi(r.FormValue("id"))
 	product := models.User{}
@@ -187,7 +191,7 @@ func EditUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteUser(w http.ResponseWriter, r *http.Request) {
-
+	enableCors(&w)
 	db := GormDB()
 	id, _ := strconv.Atoi(r.FormValue("id"))
 	item := models.User{}
@@ -199,7 +203,7 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func ResetPassword(w http.ResponseWriter, r *http.Request) {
-
+	enableCors(&w)
 	db := GormDB()
 	product := models.User{}
 	id, _ := strconv.Atoi(r.FormValue("id"))
