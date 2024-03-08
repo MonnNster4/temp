@@ -1,16 +1,24 @@
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
 
-
-const Modal = ({ isVisible, onClose, data }) => {
+const Modal = ({ isVisible, onClose }) => {
   if (!isVisible) return null;
 
-  const [inputData, setInputData] = useState({ Name: "", CreationDate: "" });
+  const [inputData, setInputData] = useState({
+    Name: "",
+    CreationDate: "",
+    DOB: "",
+    Address: "",
+    Email: "",
+    Phone: "",
+    Type: "",
+    Status: "",
+    Language: "",
+    Comment: "",
+  });
 
   function handleSubmit(event) {
     event.preventDefault();
-
-    // console.log(nameInput, dateInput)
 
     Axios({
       method: "post",
@@ -21,14 +29,6 @@ const Modal = ({ isVisible, onClose, data }) => {
       onClose();
     });
   }
-
-  useEffect(() => {
-    if (data) {
-      setInputData(inputData);
-    } else {
-      inputData;
-    }
-  }, [data]);
 
   return (
     <>
@@ -148,6 +148,12 @@ const Modal = ({ isVisible, onClose, data }) => {
                     datepicker
                     type="date"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    onChange={(e) =>
+                      setInputData({
+                        ...inputData,
+                        DOB: e.target.value,
+                      })
+                    }
                     placeholder="Date of birth"
                   />
                 </div>
@@ -164,6 +170,12 @@ const Modal = ({ isVisible, onClose, data }) => {
                     name="address"
                     id="address"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                    onChange={(e) =>
+                      setInputData({
+                        ...inputData,
+                        Address: e.target.value,
+                      })
+                    }
                     placeholder="Enter address"
                     required=""
                   />
@@ -181,6 +193,12 @@ const Modal = ({ isVisible, onClose, data }) => {
                     name="email"
                     id="email"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                    onChange={(e) =>
+                      setInputData({
+                        ...inputData,
+                        Email: e.target.value,
+                      })
+                    }
                     placeholder="Enter email"
                     required=""
                   />
@@ -198,6 +216,12 @@ const Modal = ({ isVisible, onClose, data }) => {
                     name="phone"
                     id="phone"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                    onChange={(e) =>
+                      setInputData({
+                        ...inputData,
+                        Phone: e.target.value,
+                      })
+                    }
                     placeholder="Enter number"
                     required=""
                   />
@@ -211,7 +235,14 @@ const Modal = ({ isVisible, onClose, data }) => {
                     Type of Candidate
                   </label>
                   <select
-                    id="category"
+                    name="type"
+                    id="type"
+                    onChange={(e) =>
+                      setInputData({
+                        ...inputData,
+                        Type: e.target.value,
+                      })
+                    }
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                   >
                     <option selected="">Select category</option>
@@ -219,6 +250,29 @@ const Modal = ({ isVisible, onClose, data }) => {
                     <option value="Permanent">Permanent</option>
                     <option value="Immigration">Immigration</option>
                   </select>
+                </div>
+
+                <div>
+                  <label
+                    for="language"
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Email
+                  </label>
+                  <input
+                    type="language"
+                    name="language"
+                    id="language"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                    onChange={(e) =>
+                      setInputData({
+                        ...inputData,
+                        Language: e.target.value,
+                      })
+                    }
+                    placeholder="Enter language"
+                    required=""
+                  />
                 </div>
 
                 <div className="sm:col-span-2">
@@ -231,6 +285,12 @@ const Modal = ({ isVisible, onClose, data }) => {
                   <textarea
                     id="Your message"
                     rows="4"
+                    onChange={(e) =>
+                      setInputData({
+                        ...inputData,
+                        Comment: e.target.value,
+                      })
+                    }
                     className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     placeholder="Leave a comment..."
                   ></textarea>
