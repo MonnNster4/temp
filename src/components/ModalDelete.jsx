@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import  Axios  from "axios";
 
-const ModalDelete = ({ isVisible, onClose, data }) => {
+const ModalDelete = ({ isVisible, onClose, data, updatePage }) => {
   if (!isVisible) return null;
 
   const [inputData, setInputData] = useState({
@@ -19,6 +19,7 @@ const ModalDelete = ({ isVisible, onClose, data }) => {
       data: inputData,
     }).then(function (response) {
       onClose();
+      updatePage("refresh")
     });
   }
 
@@ -60,6 +61,7 @@ const ModalDelete = ({ isVisible, onClose, data }) => {
             <h4 className="text-lg font-semibold mt-6">
               Are you sure you want to delete it?
             </h4>
+            <h6>{data.Name}</h6>
           </div>
           <div className="text-center space-x-4">
             <button

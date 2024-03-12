@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
 
-const Modal = ({ isVisible, onClose, data }) => {
+const Modal = ({ isVisible, onClose, updatePage }) => {
   const [inputData, setInputData] = useState([]);
 
   function handleSubmit(event) {
@@ -14,6 +14,7 @@ const Modal = ({ isVisible, onClose, data }) => {
       data: inputData,
     }).then(function (response) {
       onClose();
+      updatePage("refresh")
     });
   }
 

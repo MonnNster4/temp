@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Axios from "axios";
 
 
-const ModalEdit = ({ isVisible, onClose, data }) => {
+const ModalEdit = ({ isVisible, onClose, data, updatePage }) => {
   if (!isVisible) return null;
 
   
@@ -33,8 +33,8 @@ const ModalEdit = ({ isVisible, onClose, data }) => {
       data: inputData,
     }).then(function (response) {
       onClose();
+      updatePage("refresh")
     });
-    console.log(inputData)
   }
 
   return (

@@ -19,6 +19,12 @@ function Product({}) {
   const [deleteid, setdDeleteId] = useState("");
   const [editid, setdEditId] = useState("");
 
+  const [currentPage, setCurrentPage] = useState('');
+    const updatePage = title => {
+      setCurrentPage(title)
+      fetchData()
+    }
+
   const fetchData =
     useCallback(async () => {
       try {
@@ -133,16 +139,19 @@ function Product({}) {
       <Modal
         data={candidates}
         isVisible={showModal}
+        updatePage={updatePage}
         onClose={() => setShowModal(false)}
       />
       <ModalEdit
         isVisible={showModalEdit}
         onClose={() => setShowModalEdit(false)}
+        updatePage={updatePage}
         data={editid}
       />
       <ModalDelete
         isVisible={showModalTwo}
         onClose={() => setShowModalTwo(false)}
+        updatePage={updatePage}
         data={deleteid}
       />
     </>
