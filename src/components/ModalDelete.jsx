@@ -19,7 +19,7 @@ const ModalDelete = ({ isVisible, onClose, data, updatePage }) => {
       data: inputData,
     }).then(function (response) {
       onClose();
-      updatePage("refresh")
+      updatePage()
     });
   }
 

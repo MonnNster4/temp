@@ -18,10 +18,7 @@ function Product({}) {
   const [candidates, setCandidates] = useState([]);
   const [deleteid, setdDeleteId] = useState("");
   const [editid, setdEditId] = useState("");
-
-  const [currentPage, setCurrentPage] = useState('');
-    const updatePage = title => {
-      setCurrentPage(title)
+    const updatePage = () => {
       fetchData()
     }
 

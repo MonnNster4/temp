@@ -14,7 +14,7 @@ const Modal = ({ isVisible, onClose, updatePage }) => {
       data: inputData,
     }).then(function (response) {
       onClose();
-      updatePage("refresh")
+      updatePage()
     });
   }
 
