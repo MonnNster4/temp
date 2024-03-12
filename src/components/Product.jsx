@@ -17,6 +17,7 @@ function Product({}) {
 
   const [candidates, setCandidates] = useState([]);
   const [deleteid, setdDeleteId] = useState("");
+  const [editid, setdEditId] = useState("");
 
   const fetchData =
     useCallback(async () => {
@@ -111,7 +112,7 @@ function Product({}) {
                           <MdEdit
                             size={15}
                             className="cursor-pointer"
-                            onClick={() => setShowModalEdit(item)}
+                            onClick={() => setShowModalEdit(item) || setdEditId(item)}
                           />
                           <RiDeleteBin6Fill
                             size={15}
@@ -137,7 +138,7 @@ function Product({}) {
       <ModalEdit
         isVisible={showModalEdit}
         onClose={() => setShowModalEdit(false)}
-        data={candidates}
+        data={editid}
       />
       <ModalDelete
         isVisible={showModalTwo}
