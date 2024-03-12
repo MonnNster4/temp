@@ -1,36 +1,39 @@
-import React, { useContext } from "react";
+import React, { useCallback, useContext } from "react";
 
-import { Link } from "react-router-dom";
-
-import { BsPlus, BsEyeFill } from "react-icons/bs";
-
-import { CartContext } from "../contexts/CartContext";
 import { Table } from "flowbite-react";
 import { IoMdPersonAdd } from "react-icons/io";
 import { MdEdit } from "react-icons/md";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import Modal from "../components/Modal";
-import ModalTwo from "./ModalTwo";
+import ModalDelete from "./ModalDelete";
+import ModalEdit from "./ModalEdit";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-// const Product = ({ product }) => {
-
 function Product({}) {
   const [showModal, setShowModal] = useState(false);
+  const [showModalEdit, setShowModalEdit] = useState(false);
   const [showModalTwo, setShowModalTwo] = useState(false);
 
   const [candidates, setCandidates] = useState([]);
+  const [deleteid, setdDeleteId] = useState("");
+
+  const fetchData =
+    useCallback(async () => {
+      try {
+        const result = await axios.get(
+          "http://localhost:1993/api/get_candidate"
+        );
+        setCandidates(result.data.item);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    },
+    [candidates]);
 
   useEffect(() => {
-    fetchData();
-  }, [candidates]);
-
-    const fetchData = async () => {
-      const result = await axios.get("http://localhost:1993/api/get_candidate");
-      setCandidates(result.data.item);
-    };
-  
+    return () => fetchData();
+  }, []);
 
   return (
     <>
@@ -79,9 +82,12 @@ function Product({}) {
             {candidates.length > 0
               ? candidates.map((item, key) => {
                   return (
-                    <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                    <Table.Row
+                      className="bg-white dark:border-gray-700 dark:bg-gray-800"
+                      key={item.ID}
+                    >
                       <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                        {"1"}
+                        {item.ID}
                       </Table.Cell>
                       <Table.Cell>{item.Name}</Table.Cell>
                       <Table.Cell>
@@ -105,12 +111,14 @@ function Product({}) {
                           <MdEdit
                             size={15}
                             className="cursor-pointer"
-                            onClick={() => setShowModal(true)}
+                            onClick={() => setShowModalEdit(item)}
                           />
                           <RiDeleteBin6Fill
                             size={15}
                             className="cursor-pointer"
-                            onClick={() => setShowModalTwo(true)}
+                            onClick={() =>
+                              setShowModalTwo(true) || setdDeleteId(item)
+                            }
                           />
                         </a>
                       </Table.Cell>
@@ -118,20 +126,24 @@ function Product({}) {
                   );
                 })
               : null}
-
-        
           </Table.Body>
         </Table>
       </div>
       <Modal
+        data={candidates}
         isVisible={showModal}
         onClose={() => setShowModal(false)}
       />
-      <ModalTwo
+      <ModalEdit
+        isVisible={showModalEdit}
+        onClose={() => setShowModalEdit(false)}
+        data={candidates}
+      />
+      <ModalDelete
         isVisible={showModalTwo}
         onClose={() => setShowModalTwo(false)}
+        data={deleteid}
       />
-  
     </>
   );
 }

@@ -1,9 +1,17 @@
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
 
-const Modal = ({ isVisible, onClose, data }) => {
-  const [inputData, setInputData] = useState([]);
 
+const ModalEdit = ({ isVisible, onClose, data }) => {
+  if (!isVisible) return null;
+
+  
+
+  const [inputData, setInputData] = useState({
+    data: data.ID,
+  });
+
+  console.log(JSON.stringify(data))
   function handleSubmit(event) {
     event.preventDefault();
 
@@ -16,8 +24,6 @@ const Modal = ({ isVisible, onClose, data }) => {
       onClose();
     });
   }
-
-  if (!isVisible) return null;
 
   return (
     <>
@@ -67,7 +73,7 @@ const Modal = ({ isVisible, onClose, data }) => {
               </button>
             </div>
             {/* Modal body  */}
-            <form onSubmit={handleSubmit}>
+            <form>
               <div className="grid gap-4 mb-4 sm:grid-cols-2">
                 <div>
                   <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -83,6 +89,7 @@ const Modal = ({ isVisible, onClose, data }) => {
                     }
                     placeholder="Enter candidate name"
                     required=""
+                    value={data.Name}
                   />
                 </div>
 
@@ -110,6 +117,7 @@ const Modal = ({ isVisible, onClose, data }) => {
                         CreationDate: e.target.value,
                       })
                     }
+                    value={inputData.creationDate}
                     placeholder="Creation date"
                   />
                 </div>
@@ -255,8 +263,9 @@ const Modal = ({ isVisible, onClose, data }) => {
                 <button
                   type="submit"
                   className="  text-white bg-gray-700 hover:bg-gray-800 focus:ring-1 focus:outline-none font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+                  onClick={handleSubmit}
                 >
-                  Submit
+                  Submitt
                 </button>
               </div>
             </form>
@@ -267,4 +276,4 @@ const Modal = ({ isVisible, onClose, data }) => {
   );
 };
 
-export default Modal;
+export default ModalEdit;
